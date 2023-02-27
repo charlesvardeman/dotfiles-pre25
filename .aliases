@@ -1,0 +1,78 @@
+commit () { git commit -am "${1}" && git push; }
+fixes () { git commit -am "fixes #${1}" && git push; }
+
+alias a=alias
+
+a issues="gh issue list"
+a issue="gh issue create"
+a enhancement="gh issue create -l enhancement -b '' -t"
+a bug="gh issue create -l bug -b '' -t"
+a breaking="gh issue create -l breaking -b '' -t"
+# a note="gh issue -R charlesvardeman/notes create"
+
+alias gitssh="perl -pi -e 's#https://github\.com/#git\@github.com:# if /\[remote \"origin/../fetch =/' .git/config"
+
+a minst="mamba install -c defaults"
+
+a jl="jupyter lab --no-browser"
+
+a jn='jupyter notebook --no-browser'
+
+# From https://www.atlassian.com/git/tutorials/dotfiles
+a config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+a grep='grep  --color=auto --exclude-dir={.git}'
+a ls='ls -v --color=auto'
+a ll="ls -l"
+a l="ls -CF"
+a ip='ipython --no-banner'
+a pip-update="pip install --upgrade pip && pip freeze --local | grep -v \
+  '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
+a pi="pip install -U --user"
+a nvi="nvidia-smi"
+a nvdm="nvidia-smi dmon"
+
+#alias latex-update="tlmgr update --self --all --reinstall-forcibly-removed"
+#alias py="python"
+#alias preview="open -a /Applications/Preview.app"
+
+
+
+alias sudo='sudo -E'  # Use current user configs
+
+# Aliases for content-negotion and RDF
+a curtle='curl -H "Accept: text/turtle"'
+a curltrig='curl -H "Accept: application/trig"'
+a curltriples='curl -H "Accept: application/n-triples"'
+a curlquads='curl -H "Accept: application/n-quads"'
+a curlson='curl -H "Accept: application/json"'
+a curld='curl -H "Accept: application/ld+json"'
+
+
+# N-Triples aliases from http://blog.datagraph.org/2010/03/grepping-ntriples
+a rdf-count="awk '/^\s*[^#]/ { n += 1 } END { print n }'"
+a rdf-lengths="awk '/^\s*[^#]/ { print length }'"
+a rdf-length-avg="awk '/^\s*[^#]/ { n += 1; s += length } END { print s/n }'"
+a rdf-length-max="awk 'BEGIN { n=0 } /^\s*[^#]/ { if (length>n) n=length } END { print n }'"
+a rdf-length-min="awk 'BEGIN { n=1e9 } /^\s*[^#]/ { if (length>0 && length<n) n=length } END { print (n<1e9 ? n : 0) }'"
+a rdf-subjects="awk '/^\s*[^#]/ { print \$1 }' | uniq"
+a rdf-predicates="awk '/^\s*[^#]/ { print \$2 }' | uniq"
+a rdf-objects="awk '/^\s*[^#]/ { ORS=\"\"; for (i=3;i<=NF-1;i++) print \$i \" \"; print \"\n\" }' | uniq"
+a rdf-datatypes="awk -F'\x5E' '/\"\^\^</ { print substr(\$3, 2, length(\$3)-4) }' | uniq"
+
+# Shortcuts for CRC machines ##################################################
+#Some useful EXPORTs
+export CRC="crc.nd.edu"
+export FE1="crcfe01.$CRC"
+export FE2="crcfe02.$CRC"
+export CAML="caml.$CRC"
+export JLC="jupyter-caml.$CRC"
+
+# and corresponding ALIASes
+a fe1="ssh $FE1"
+a caml="ssh $CAML"
+a jlc="ssh $JLC"
+
+# with X forwarding
+a fe1x="ssh -Y $FE1"
+

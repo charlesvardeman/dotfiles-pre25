@@ -1,0 +1,106 @@
+stty -ixon
+shopt -s globstar
+
+parse_git_branch() { b=$(git branch --show-current 2> /dev/null); echo ${b:+" ($b)"}; }
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]$(parse_git_branch)\[\033[00m\]\$ '
+
+[ -f ~/.aliases ] && . ~/.aliases
+[ -f ~/.bash_secrets ] && . ~/.bash_secrets
+
+alias config="/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME"
+export VISUAL=vim
+export EDITOR="$VISUAL"
+export PERL_MM_USE_DEFAULT=1
+
+# If homebrew is installed on mac, add to path
+
+[ -f /opt/homebrew/bin/brew ] && export PATH="/opt/homebrew/bin:$PATH"
+
+
+export IGNOREEOF=2
+export PAGER=less
+export LESS=-XRi
+export LANG='en_US.UTF-8'
+
+
+export CLICOLOR=1
+export LSCOLORS=gxfxbEaEBxxEhEhBaDaCaD
+
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+export HISTCONTROL=ignoreboth
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+export HISTSIZE=1000
+export HISTFILESIZE=2000
+export HISTTIMEFORMAT="%d/%m/%y %T "
+
+# Essential bash completion
+if [ -x "$(command -v brew)" ]; then
+  if [ -f $(brew --prefix)/etc/bash_completion ]
+    then
+      source $(brew --prefix)/etc/bash_completion
+    fi
+  fi
+
+# Fix Catalina zsh shit warning
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
+
+
+# Better ls colouring
+if [[ -f /usr/local/bin/gdircolors && -f $HOME/.dir_colors ]]; then
+    eval $(gdircolors -b $HOME/.dir_colors)
+fi
+
+
+
+tarz () { tar -I pigz -cf $1.tgz $1; }
+commit () { git commit -am "${1}"; git push; }
+fixes () { git commit -am "fixes #${1}"; git push; }
+
+git_clone_all () {
+  cd ~/git
+  parallel -a repos 'git clone git@github.com:fastai/{}.git'
+  cd -
+}
+
+git_pull_all () {
+  pushd ~/git
+  parallel -a repos 'echo " # {}" && cd ~/git/{} && git pull'
+  popd
+}
+
+git_status_rel () {
+  pushd ~/git
+  parallel -a releases 'echo " # {}" && cd ~/git/{} && git status'
+  popd
+}
+
+vibash () {
+  vim ~/.bashrc
+  . ~/.bashrc
+}
+
+vibashl () {
+  vim ~/.bashrc.local
+  . ~/.bashrc
+}
+
+if [ -x "$(command -v gh)" ]; then
+  eval "$(gh completion -s bash)"
+fi
+
+# Create ssh tunnel via cims for Jupyter Notebook
+# Run as: nb server_name
+function nb {
+    if [ -z "$1" ]; then
+        echo -e '  > run as: \033[1;32m$\033[0m nb <my_server>'
+        return
+    fi
+    echo "Connecting http://localhost:8000 -> $1:8888"
+    read < <( ssh -NCqL 8000:localhost:8888 $1 & echo $! )
+    echo "Done. PID = $REPLY"
+}
+
