@@ -44,7 +44,7 @@ When cloning from a github repository, select "ssh clone\* vs "HTTPS clone" from
 
 ### Fork the Dotfiles repository and clone the repository
 
-It is **highly** recommended that you create your own copy of these dotfiles by [forking](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository. This will allow you to create your own aliases and customize the dotfiles for different environments. After you have a
+It is **highly** recommended that you create your own copy of these dotfiles by [forking](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository. This will allow you to create your own aliases and customize the dotfiles for different environments. After you have a fork of the repository, you can
 
 ### Setup Homebrew
 
