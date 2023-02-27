@@ -15,10 +15,15 @@ if [ ! -d "$HOME/.vim/pack/minpac/opt/minpac" ]; then
 else
   echo '✔ minpac is already installed.'
 fi                                                                            
+
+# Setup bash dotfiles
 echo "source ~/.bashrc.local" >> ~/.bashrc
 grep -q 'source ~/.bashrc' ~/.bash_profile 2&> 1 || echo "source ~/.bashrc" >> ~/.bash_profile;
 . ~/.bashrc
 
+# Setup zsh dotfiles https://apple.stackexchange.com/questions/388622/zsh-zprofile-zshrc-zlogin-what-goes-where
+echo "source ~/.zshrc.local" >> ~/.zshrc
+grep -q 'source ~/.zshrc' ~/.zprofile 2&> 1 || echo "source ~/.zshrc" >> ~/.zprofile;
 
 
 

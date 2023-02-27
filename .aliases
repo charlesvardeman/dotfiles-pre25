@@ -12,7 +12,10 @@ a breaking="gh issue create -l breaking -b '' -t"
 
 alias gitssh="perl -pi -e 's#https://github\.com/#git\@github.com:# if /\[remote \"origin/../fetch =/' .git/config"
 
-a minst="mamba install -c defaults"
+# This assumes micromamba was installed either through homebrew or via executable download
+# If you don't install mambaforge, you need to specifiy a chanel
+a minst="micromamba -p ~/conda install -c conda-forge"
+# a minst="mamba install -c defaults"
 
 a jl="jupyter lab --no-browser"
 
