@@ -24,7 +24,17 @@ if [ -f /opt/homebrew/bin/brew ]; then
     export PATH=/opt/homebrew/bin:$PATH
 fi
 
+
+# Check for quarto on macos
+if [ -f /Applications/quarto/bin/quarto ]; then
+    export PATH=$PATH:/Applications/quarto/bin
+fi
+
+
+
 [ -f ~/.aliases ] && . ~/.aliases
+
+
 
 
 ### ---- PLUGINS & THEMES -----------------------------------
@@ -38,11 +48,12 @@ fpath=($ZSH/plugins/zsh-completions/src $fpath)
 ### --- Spaceship Config ------------------------------------
 
 SPACESHIP_PROMPT_ORDER=(
+  conda
+  python
   user          # Username section
   dir           # Current directory section
   host          # Hostname section
   git           # Git section (git_branch + git_status)
-  hg            # Mercurial section (hg_branch  + hg_status)
   exec_time     # Execution time
   line_sep      # Line break
   jobs          # Background jobs indicator
@@ -50,6 +61,7 @@ SPACESHIP_PROMPT_ORDER=(
   char          # Prompt character
 )
 SPACESHIP_USER_SHOW=always
+SPACESHIP_CONDA_SHOW=true
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_CHAR_SYMBOL="❯"
 SPACESHIP_CHAR_SUFFIX=" "

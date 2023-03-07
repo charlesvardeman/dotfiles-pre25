@@ -17,8 +17,8 @@
 conda_install_prefix="${HOME}/conda"
 
 echo "Creating base environment"
-micromamba --root-prefix="${conda_install_prefix}" create -n base 
+micromamba --root-prefix="${conda_install_prefix}" create -n base python=3.10.4 
 echo "Installing jupyter lab"
-micromamba --root-prefix="${conda_install_prefix}" --name=base install jupyterlab -c conda-forge
+micromamba --root-prefix="${conda_install_prefix}" --name=base install fastai fastbook jupyterlab sentencepiece 
 echo "Installing pytorch nightly"
 micromamba --root-prefix="${conda_install_prefix}" --name=base install pytorch torchvision torchaudio -c pytorch-nightly -c conda-forge

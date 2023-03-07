@@ -15,22 +15,35 @@
 # https://qbiwan.github.io/fastpages/mamba-installation
 
 
-echo "Installing pytorch nightly"
-mamba install pytorch torchvision torchaudio -c pytorch-nightly
-echo "Installing Juputer notebook"
-mamba install -c conda-forge notebook
+echo "Installing Jupyter notebook"
+mamba install -n base -c conda-forge notebook
 echo "Installing nb_conda_kernels"
-mamba install -c conda-forge nb_conda_kernels
+mamba install -n base -c conda-forge nb_conda_kernels
 echo "Installing jupyterlab"
-mamba install jupyterlab
+mamba install -n base jupyterlab
 echo "Installing nbdev"
-mamba install -c fastai nbdev
+mamba installi -n base -c fastai nbdev
 echo "Installing dvc"
-mamba install -c conda-forge dvc
+mamba install -n base -c conda-forge dvc
 echo "Installing jupyter notebook contribs"
-mamba install -c conda-forge jupyter_contrib_nbextensions
-echo "Installing pdm to manage python dependencies"
-mamba install -c conda-forge pdm
-echo "Installing RISE"
-mamba install -c conda-forge jsonschema-with-format-nongpl
-mamba install -c conda-forge rise
+mamba install -n base -c conda-forge jupyter_contrib_nbextensions
+#echo "Installing pdm to manage python dependencies"
+#mamba install -c conda-forge pdm
+#Install Jupyter lab deck
+# https://jupyterlab-deck.readthedocs.io/en/stable/
+mamba install -c conda-forge jupyterlab-deck
+
+# Make fastai environment
+echo "Installing fastai"
+mamba create --name fastai --clone base
+mamba activate fastai
+mamba install -n fastai -c fastchan fastai fastbook sentencepiece
+mamba deactivate fastai
+
+# Make pytorch nightly
+echo "Installing pytorch nightly"
+mamba create --name pytorch --clone base
+mamba activate pytorch
+mamba install -n pytorch pytorch torchvision torchaudio -c pytorch-nightly
+mamba deactivate pytorch
+

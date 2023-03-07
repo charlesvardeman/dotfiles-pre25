@@ -17,3 +17,4 @@ brew install bash
 brew install exa
 brew install ack
 brew install reattach-to-user-namespace
+brew install graphviz

@@ -34,6 +34,9 @@ a pip-update="pip install --upgrade pip && pip freeze --local | grep -v \
 a pi="pip install -U --user"
 a nvi="nvidia-smi"
 a nvdm="nvidia-smi dmon"
+# From: https://medium.com/@leopardsaga/problems-caused-by-conda-does-not-isolate-the-pyhon-user-site-packages-942fe4e71680
+a ppp='python3 -c "import sys; from pprint import pprint as p; p(sys.path)"'
+
 
 #alias latex-update="tlmgr update --self --all --reinstall-forcibly-removed"
 #alias py="python"
