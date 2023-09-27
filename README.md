@@ -62,6 +62,6 @@ and then install homebrew using the homepage instructions:
 
 #### Homebrew casks
 
-### Mamba
+### Mamba Miniforge
 
-The "Live coding 1" session with Jeremy Howard does a walk through of installing using the [mambaforge](https://github.com/conda-forge/miniforge#mambaforge) installers. This is the _fastest_ way to get a functional python environment with some sensible defaults. It is highly recommended to have a look at [Beginner's Guide to Mambaforge Installation](https://qbiwan.github.io/fastpages/mamba-installation)
+The "Live coding 1" session with Jeremy Howard does a walk through of installing using the `mambaforge` installer. Since this video, mamba has been integrated into the main [Miniforge](https://github.com/conda-forge/miniforge) installer. This is the _fastest_ way to get a functional python environment with some sensible defaults. The install instructions on the miniforge webpage are pretty good to get a working install. It is highly recommended to have a look at [Beginner's Guide to Mambaforge Installation](https://qbiwan.github.io/fastpages/mamba-installation)
