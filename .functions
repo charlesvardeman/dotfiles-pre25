@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Stupid tmux and conda don't play well †ogether
+# See: https://daler.github.io/dotfiles/conda.html
+# https://github.com/daler/dotfiles/blob/master/.functions
+# Select a conda env to activate
+sa() {
+    local name=$(conda env list | grep -v "#" | fzf)
+    local env=$(echo $name | awk '{print $1}');
+    eval "source activate $env";
+}
+
+function ca() {
+    # This function allows you to activate the base env only when you're ready
+    # to (and don't activate it on EVERY new shell).
+    #
+    # You can also provide an env name or path to activate it.
+    eval "$(conda shell.bash hook 2> /dev/null)"
+    conda activate "$@"
+}
+
+function hostlist() {
+    # Parse ~/.ssh/config and print out a nicely-formatted table of configured
+    # hosts. Useful for when you're trying to remember how to log in to an
+    # infrequently-accessed host.
+    paste \
+        <(grep -i "^Host" ~/.ssh/config | grep -v "*" | awk '{print $2}') \
+        <(grep -i "Hostname" ~/.ssh/config | grep -v "*" | awk '{print $2}') \
+        | column -t \
+        | sort
+}
+
+function conda_deactivate_all() {
+    # Keep deactivating until we no longer have a CONDA_PREFIX env var (which
+    # might be a few times, if we had activated the base env and then another
+    # env)
+    eval "$(conda shell.bash hook 2> /dev/null)"
+    while [ -n "$CONDA_PREFIX" ]; do
+        conda deactivate;
+    done
+}
+
+# `tre` is a shorthand for `tree` with hidden files and color enabled, ignoring
+# the `.git` directory, listing directories first. The output gets piped into
+# `less` with options to preserve color and line numbers, unless the output is
+# small enough for one screen.
+function tre() {
+    tree -aC -I '.git|env|.snakemake|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
+}
+

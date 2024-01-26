@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+export EDITOR="vim"
+export CLICOLOR=1
+
+export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
+
+export HISTSIZE='32768';
+export HISTFILESIZE="${HISTSIZE}";
+export HISTCONTROL='ignoreboth';
+
+# in tmux, highlight rather than italicize
+export LESS_TERMCAP_so=$'\E[30;43m'
+export LESS_TERMCAP_se=$'\E[39;49m'
+
+# Don’t clear the screen after quitting a manual page.
+export MANPAGER='less -X';
+
+# By default, Mac uses /bin/sh as the shell
+if [[ $OSTYPE == darwin* ]]; then
+    export BASH_SILENCE_DEPRECATION_WARNING=1
+    export SHELL=/bin/bash
+fi
+
+# If homebrew exists, add it to our path
+if [ -f /opt/homebrew/bin/brew ]; then
+    export PATH=/opt/homebrew/bin:$PATH
+fi
+
+
+# Check for quarto on macos
+if [ -f /Applications/quarto/bin/quarto ]; then
+    export PATH=$PATH:/Applications/quarto/bin
+fi
+
+
+if [ -d $HOME/.modular ]; then
+  export MODULAR_HOME="/Users/cvardema/.modular"
+  export PATH="/Users/cvardema/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
+fi
+
+if [ -d $HOME/miniforge3 ]; then
+  export PATH=$HOME/miniforge3/bin:$PATH
+fi
+
+

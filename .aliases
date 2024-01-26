@@ -1,3 +1,35 @@
+# Some notes on `ls` on Mac...
+#
+# Vanilla MacOS, based on BSD, has a different `ls`. It uses -G instead
+# of --color. The colors are also handled differently (dircolors is not
+# available by default; uses different env vars for controlling colors).
+#
+# Previously depended on a conda environment with GNU coreutils
+# installed so that we get the exact same colors as on Linux. That proved
+# finicky. See [0] for some details.  so this always uses the system `ls` on Mac, setting the colors to be
+# close enough.
+#
+# The solution here is:
+#  - check $LS_COLORS (note underscore) in an environment with dircolors and GNU ls
+#  - paste the value of $LS_COLORS into [2]
+#  - copy the reported $LSCOLORS (no underscore) value. That will be used by BSD ls.
+#  - export LSCOLORS on Mac.
+#
+# [0] https://github.com/daler/dotfiles/pull/35
+# [1] https://superuser.com/a/1746907
+# [2] https://geoff.greer.fm/lscolors
+#
+if [[ $OSTYPE == darwin* ]]; then
+    export LSCOLORS=cxgxfxexbxegedabagacad
+    alias ls='/bin/ls -G'
+else
+    if command -v dircolors > /dev/null; then
+        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    fi
+    alias ls="ls --color=auto"
+fi
+
+
 commit () { git commit -am "${1}" && git push; }
 fixes () { git commit -am "fixes #${1}" && git push; }
 
@@ -25,9 +57,17 @@ a jn='jupyter notebook --no-browser'
 a config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 a grep='grep  --color=auto --exclude-dir={.git}'
-a ls='ls -v --color=auto'
-a ll="ls -l"
-a l="ls -CF"
+a ll='ls -lrth'
+a la='ls -lrthA'
+a l='ls -CF'
+a tmux="tmux -u"
+
+# View syntax-highlighted files in the current directory, live-filtered by fzf.
+alias v='fzf --preview "bat --color \"always\" --theme GitHub {}"'
+
+# Save three keystrokes to go up a directory
+alias ..="cd .."
+
 a ip='ipython --no-banner'
 a pip-update="pip install --upgrade pip && pip freeze --local | grep -v \
   '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
