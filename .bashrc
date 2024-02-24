@@ -33,6 +33,13 @@ if [[ $OSTYPE == darwin* ]]; then
     test -f ~/.git-completion.bash && source ~/.git-completion.bash
 fi
 
+
+# Rust cargo support
+if [ -f $HOME/.cargo/env ]; then
+  . "$HOME/.cargo/env"
+fi
+
+
 # New bash shells spawned by tmux will silently break conda environments by
 # placing the system path in front of the conda env path -- even though the
 # prompt still indicates an active environment. This can be quite confusing.
