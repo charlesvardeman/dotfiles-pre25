@@ -35,6 +35,8 @@ fixes () { git commit -am "fixes #${1}" && git push; }
 
 alias a=alias
 
+# For pdm in-project venv activation
+a pdma='eval "$(pdm venv activate)"'
 
 # Shortcuts to git development space
 a dev="cd $HOME/dev/git"
