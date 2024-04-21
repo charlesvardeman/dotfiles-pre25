@@ -5,6 +5,7 @@
 # https://github.com/daler/dotfiles/blob/master/.functions
 # Select a conda env to activate
 sa() {
+    local PATH="$HOME/miniforge3/bin:$PATH"
     local name=$(conda env list | grep -v "#" | fzf)
     local env=$(echo $name | awk '{print $1}');
     eval "source activate $env";
@@ -15,6 +16,7 @@ function ca() {
     # to (and don't activate it on EVERY new shell).
     #
     # You can also provide an env name or path to activate it.
+    local PATH="$HOME/miniforge3/bin:$PATH"
     eval "$(conda shell.bash hook 2> /dev/null)"
     conda activate "$@"
 }
@@ -34,6 +36,7 @@ function conda_deactivate_all() {
     # Keep deactivating until we no longer have a CONDA_PREFIX env var (which
     # might be a few times, if we had activated the base env and then another
     # env)
+    local PATH="$HOME/miniforge3/bin:$PATH"
     eval "$(conda shell.bash hook 2> /dev/null)"
     while [ -n "$CONDA_PREFIX" ]; do
         conda deactivate;

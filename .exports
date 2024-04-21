@@ -41,8 +41,8 @@ if [ -d $HOME/.modular ]; then
   export PATH="/Users/cvardema/.modular/pkg/packages.modular.com_mojo/bin:$PATH"
 fi
 
-if [ -d $HOME/miniforge3 ]; then
-  export PATH=$HOME/miniforge3/bin:$PATH
-fi
+# if [ -d $HOME/miniforge3 ]; then
+#  export PATH=$HOME/miniforge3/bin:$PATH
+# fi
 
 
