@@ -51,6 +51,10 @@ function tre() {
     tree -aC -I '.git|env|.snakemake|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+
+## Use UV as a poetry replecement since poetry is slow
+## https://mil.ad/blog/2024/uv-poetry-install.html
+
 va () {
     source .venv/bin/activate 2>/dev/null || source ../.venv/bin/activate 2>/dev/null || echo 'no .env found in this or parent directory' && false
 }
