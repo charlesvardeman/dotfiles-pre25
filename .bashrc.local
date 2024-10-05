@@ -16,6 +16,10 @@ export PERL_MM_USE_DEFAULT=1
 
 [ -f /opt/homebrew/bin/brew ] && export PATH="/opt/homebrew/bin:$PATH"
 
+# Rust cargo support
+if [ -f $HOME/.cargo/env ]; then
+  . "$HOME/.cargo/env"
+fi
 
 export IGNOREEOF=2
 export PAGER=less
@@ -104,3 +108,24 @@ function nb {
     echo "Done. PID = $REPLY"
 }
 
+
+va () {
+    source .venv/bin/activate 2>/dev/null || source ../.venv/bin/activate 2>/dev/null || echo 'no .env found in this or parent directory' && false
+}
+
+va! () { 
+    va || vc && va
+}
+
+vc () {
+    uv venv --seed --python-preference managed "$@"
+}
+
+vd () { deactivate; }
+
+
+uv_poetry_install () {
+    uv pip install keyrings.google-artifactregistry-auth
+    uv pip install --no-deps --keyring-provider subprocess -r <(POETRY_WARNINGS_EXPORT=false poetry export --without-hashes --with dev -f requirements.txt | sed 's|--extra-index-url [https://us-central1-python.pkg.dev](https://us-central1-python.pkg.dev/)|--extra-index-url [https://oauth2accesstoken@us-central1-python.pkg.dev](https://oauth2accesstoken@us-central1-python.pkg.dev/)|g')
+    poetry install --only-root
+}

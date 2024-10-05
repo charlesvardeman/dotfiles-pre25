@@ -51,3 +51,24 @@ function tre() {
     tree -aC -I '.git|env|.snakemake|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+va () {
+    source .venv/bin/activate 2>/dev/null || source ../.venv/bin/activate 2>/dev/null || echo 'no .env found in this or parent directory' && false
+}
+
+va! () { 
+    va || vc && va
+}
+
+vc () {
+    uv venv --seed --python-preference managed "$@"
+}
+
+vd () { deactivate; }
+
+
+uv_poetry_install () {
+    uv pip install keyrings.google-artifactregistry-auth
+    uv pip install --no-deps --keyring-provider subprocess -r <(POETRY_WARNINGS_EXPORT=false poetry export --without-hashes --with dev -f requirements.txt | sed 's|--extra-index-url [https://us-central1-python.pkg.dev](https://us-central1-python.pkg.dev/)|--extra-index-url [https://oauth2accesstoken@us-central1-python.pkg.dev](https://oauth2accesstoken@us-central1-python.pkg.dev/)|g')
+    poetry install --only-root
+}
+
