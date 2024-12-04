@@ -7,6 +7,13 @@ Basic setup of Macbook for 2024.
 Previous dotfiles relied on conda and miniconda for providing python environments. The new dotfile shift to using uv to manage python environments for development.
 
 ## Basic Developer Setup
+
+- **Xcode Developer Tools**
+
+```
+xcode-select --install
+```
+
 - **Homebrew** (essential setup for everything else)
 
 ```
@@ -32,10 +39,165 @@ brew install --cask font-monaspace
 ```
 
 
-- **Shell:**
+- **Shell:** Trying Fish
+
+```
+  brew install fish
+# make fish default shell
+echo $(which fish) | sudo tee -a /etc/shells
+chsh -s $(which fish)
+
+# add brew to fish path
+echo >> /Users/eugeneyan/.config/fish/config.fish
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/eugeneyan/.config/fish/config.fish
+eval "$(/opt/homebrew/bin/brew shellenv)"
+```
 
 - **Docker:** We need docker be able to run docker containers for a bunch of tasks
 
 ```
 brew install --cask docker
 ```
+
+- htop and asitop install
+
+```
+brew install htop
+brew install asitop
+```
+
+- **New ssh keys**
+
+```
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+eval "$(ssh-agent -s)"
+touch ~/.ssh/config
+open ~/.ssh/config
+
+# add to config
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+```
+Also see the Github docs to generate a [new ssh key and add to ssh agent](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent), and [add a new ssh key to Github account](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+
+- **Git**
+```
+brew install git
+brew install git-lfs
+git config --global core.editor "nano"
+git config --global init.defaultBranch main
+git config --global user.name "CharlesVardeman"
+git config --global user.email charles.vardeman@gmail.com
+```
+- **Tmux:**
+```
+brew install tmux
+```
+
+- **General Utils and Command Replacements**
+```
+brew install bat
+brew install fzf
+brew install ripgrep
+brew install tree
+brew install wget
+brew install jq
+```
+
+- **Install DVC**
+```
+brew install dvc
+```
+
+## Research, writing, development
+
+- **Zotero:**
+
+```
+brew install --cask zotero
+# enable zotero plugin in safari
+```
+
+- **Chrome:**
+
+```
+brew install --cask google-chrome
+```
+
+- **Quarto**
+```
+brew install --cask quarto
+```
+
+- **Python, JS**
+
+```
+# very fast python package manager
+brew install uv
+
+# install the latest python
+uv python install 3.12
+```
+
+```
+brew install node
+brew install nvm
+
+# still deciding between pnpm and bun
+brew install pnpm
+brew install oven-sh/bun/bun
+```
+
+```
+brew install cmake
+```
+
+- **Semantic Web**
+```
+brew install jena
+brew install --cask protege
+```
+- **Visual Studio Code**
+```
+brew install --cask visual-studio-code
+```
+
+## Productivity and quality of life
+
+- **Raycast:** A better spotlight
+```
+brew install --cask raycast
+```
+
+- **Google Drive:** Syncing documents, files, media, etc.
+```
+brew install --cask google-drive
+```
+- **Stats + Ice:** Adding system stats to menu bar and customizing the menu bar
+```
+brew install stats
+brew install jordanbaird-ice
+```
+
+## Entertainment and communications
+
+- **Media**
+```
+brew install --cask vlc
+```
+- **Chat**
+```
+brew install --cask discord
+brew install --cask slack
+```
+- **Zoom**
+```
+brew install --cask zoom
+```
+
+
+
+
