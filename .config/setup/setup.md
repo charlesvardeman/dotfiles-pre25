@@ -38,6 +38,10 @@ brew install --cask font-iosevka-nerd-font
 brew install --cask font-monaspace
 ```
 
+- **Terminal:** Kids these days seem to be using alacritty, but JH is alos using [Ghostty](https://mitchellh.com/writing/ghostty-is-coming)
+```
+brew install --cask alacritty
+```
 
 - **Shell:** Trying Fish
 
@@ -48,8 +52,8 @@ echo $(which fish) | sudo tee -a /etc/shells
 chsh -s $(which fish)
 
 # add brew to fish path
-echo >> /Users/eugeneyan/.config/fish/config.fish
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/eugeneyan/.config/fish/config.fish
+echo >> /Users/cvardema/.config/fish/config.fish
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/cvardema/.config/fish/config.fish
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
 
@@ -153,6 +157,11 @@ brew install oven-sh/bun/bun
 
 ```
 brew install cmake
+```
+- Modular Mojo
+```
+brew install modularml/packages/modular
+modular install mojo
 ```
 
 - **Semantic Web**
