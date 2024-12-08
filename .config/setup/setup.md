@@ -160,8 +160,10 @@ brew install cmake
 ```
 - Modular Mojo
 ```
-brew install modularml/packages/modular
-modular install mojo
+curl -ssL https://magic.modular.com/6eb37fad-fb76-42b9-9f9f-023c735e2e4e | bash
+BASHRC=$( [ -f "$HOME/.bash_profile" ] && echo "$HOME/.bash_profile" || echo "$HOME/.bashrc" )
+echo 'eval "$(magic completion --shell bash)"' >> "$BASHRC"
+source "$BASHRC"
 ```
 
 - **Semantic Web**
